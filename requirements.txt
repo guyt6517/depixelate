@@ -4,3 +4,4 @@ realesrgan
 pillow
 requests
 gunicorn
+basicsr==1.3.4
