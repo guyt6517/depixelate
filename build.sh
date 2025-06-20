@@ -18,5 +18,20 @@ pip install opencv-python
 # For Python 3.10/3.11 (recommended for best compatibility):
 pip install torch==2.0.1 torchvision==0.21.0
 
+# TEMP PATCH: Prevent basicsr from importing torch during setup
+export PATCH_BASICSR_DIR=$(mktemp -d)
+pip download basicsr==1.3.4 -d "$PATCH_BASICSR_DIR" --no-deps
+cd "$PATCH_BASICSR_DIR"
+tar -xf basicsr-1.3.4.0.tar.gz
+cd basicsr-1.3.4.0
+
+# Comment out the torch import line in setup.py
+sed -i 's/^import torch/# import torch/' setup.py
+
+# Install patched basicsr manually
+pip install .
+cd ../..
+
+
 # Now install the rest of your requirements, including basicsr
 pip install -r requirements.txt
