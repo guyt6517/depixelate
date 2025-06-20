@@ -1,0 +1,6 @@
+flask
+torch
+realesrgan
+pillow
+requests
+gunicorn
